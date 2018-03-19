@@ -3,25 +3,43 @@
 <head>
 	<title>Box Test</title>
 </head>
+<style>
+	canvas {
+		border: 1px solid black;
+	}
+</style>
 <body>
 	<canvas id="canvas" height="400" width="600"></canvas>
 <script type="text/javascript">
 	var canvas = document.getElementById("canvas")
 	var context = canvas.getContext('2d')
 
-	var box = {
-		x: 100,
-		y: 200,
+	var boxes = [{
+		x: 270,
+		y: 170,
 		size: 30,
 		color: "maroon"
+	},
+	{
+		x: 370,
+		y: 270,
+		size: 30,
+		color: "maroon"
+	},{
+		x: 170,
+		y: 270,
+		size: 30,
+		color: "maroon"
+	}]
+
+	function drawBoxes(){
+		for (i = 0; i < boxes.length; i ++){
+			context.fillStyle = boxes[i].color
+			context.fillRect(boxes[i].x, boxes[i].y, boxes[i].size, boxes[i].size)
+		}
 	}
 
-	function drawBox(){
-		context.fillStyle = box.color
-		context.fillRect(box.x, box.y, box.size, box.size)
-	}
-
-	drawBox()
+	drawBoxes()
 </script>
 </body>
 </html>
