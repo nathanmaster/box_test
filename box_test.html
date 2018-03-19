@@ -8,6 +8,20 @@
 <script type="text/javascript">
 	var canvas = document.getElementById("canvas")
 	var context = canvas.getContext('2d')
+
+	var box = {
+		x: 100,
+		y: 200,
+		size: 30,
+		color: "maroon"
+	}
+
+	function drawBox(){
+		context.fillStyle = box.color
+		context.fillRect(box.x, box.y, box.size, box.size)
+	}
+
+	drawBox()
 </script>
 </body>
 </html>
