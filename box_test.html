@@ -16,8 +16,17 @@
 
 	var boxes = []
 
+	var settings = {
+		boxSize: 30,
+		boxAmount: 3
+	}
+
+	function randomNumber(n){
+		return Math.floor(Math.random()*n)+1
+	}
+
 	function createBoxes(){
-		for (i = 0; i < 3; i++){
+		for (i = 0; i < settings.boxAmount; i++){
 			boxes.push(addBox())
 		}
 	}
@@ -31,9 +40,9 @@
 
 	function addBox(){
 		return {
-			x: 270,
-			y: 170,
-			size: 30,
+			x: randomNumber(canvas.width - settings.boxSize),
+			y: randomNumber(canvas.height - settings.boxSize),
+			size: settings.boxSize,
 			color: "maroon"
 		}
 	}
