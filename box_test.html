@@ -14,23 +14,13 @@
 	var canvas = document.getElementById("canvas")
 	var context = canvas.getContext('2d')
 
-	var boxes = [{
-		x: 270,
-		y: 170,
-		size: 30,
-		color: "maroon"
-	},
-	{
-		x: 370,
-		y: 270,
-		size: 30,
-		color: "maroon"
-	},{
-		x: 170,
-		y: 270,
-		size: 30,
-		color: "maroon"
-	}]
+	var boxes = []
+
+	function createBoxes(){
+		for (i = 0; i < 3; i++){
+			boxes.push(addBox())
+		}
+	}
 
 	function drawBoxes(){
 		for (i = 0; i < boxes.length; i ++){
@@ -39,6 +29,16 @@
 		}
 	}
 
+	function addBox(){
+		return {
+			x: 270,
+			y: 170,
+			size: 30,
+			color: "maroon"
+		}
+	}
+
+	createBoxes()
 	drawBoxes()
 </script>
 </body>
