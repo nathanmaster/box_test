@@ -17,7 +17,7 @@
 	var boxes = []
 
 	var settings = {
-		boxSize: 30,
+		boxSize: 25,
 		boxAmount: 3
 	}
 
@@ -42,7 +42,7 @@
 		return {
 			x: randomNumber(canvas.width - settings.boxSize),
 			y: randomNumber(canvas.height - settings.boxSize),
-			size: settings.boxSize,
+			size: randomNumber(settings.boxSize + 5),
 			color: "maroon"
 		}
 	}
