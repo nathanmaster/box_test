@@ -29,11 +29,24 @@
 
 	var settings = {
 		boxSize: 25,
-		boxAmount: 3
+		boxAmount: 3, 
+		maxDuration: 20
 	}
 
 	function randomNumber(n, s){
 		return Math.floor(Math.random()*n)+s
+	}
+
+	function updateBoxes(){
+		for (i=0;i<boxes.length;i++){
+			if (boxes[i].duration == 0){
+				context.clearRect(boxes[i].x, boxes[i].y, boxes[i].size, boxes[i].size)
+				boxes[i] = addBox()
+				boxes[i].duration = 10
+			}
+			boxes[i].duration -= 1
+			console.log(boxes[i].duration)
+		}
 	}
 
 	function createBoxes(){
@@ -44,6 +57,7 @@
 
 	function drawBoxes(){
 		for (i = 0; i < boxes.length; i ++){
+
 			context.fillStyle = boxes[i].color
 			context.fillRect(boxes[i].x, boxes[i].y, boxes[i].size, boxes[i].size)
 		}
@@ -51,15 +65,23 @@
 
 	function addBox(){
 		return {
-			x: randomNumber(canvas.width - settings.boxSize, 1),
-			y: randomNumber(canvas.height - settings.boxSize, 1),
+			x: randomNumber(canvas.width - (settings.boxSize + 5), 1) + (settings.boxSize + 5),
+			y: randomNumber(canvas.height - (settings.boxSize + 5), 1) + (settings.boxSize + 5),
 			size: randomNumber(settings.boxSize, 5),
-			color: colors[randomNumber(colors.length, 0)]
+			color: colors[randomNumber(colors.length, 0)],
+			duration: randomNumber(settings.maxDuration + 10, 1)
 		}
 	}
 
 	createBoxes()
-	drawBoxes()
+
+	function runCode(){
+		drawBoxes()
+		updateBoxes()
+		requestAnimationFrame(runCode)
+	}
+
+	runCode()
 </script>
 </body>
 </html>
