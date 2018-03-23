@@ -6,6 +6,9 @@
 <style>
 	canvas {
 		border: 1px solid black;
+		background-color: black;
+		width:100%;
+   		height:100%;
 	}
 </style>
 <body>
@@ -14,12 +17,18 @@
 	var canvas = document.getElementById("canvas")
 	var context = canvas.getContext('2d')
 
+	/*function clearCircle(x, y, radius){
+    	context.globalCompositeOperation = 'destination-out'
+    	context.arc(x, y, radius, 0, Math.PI*2, true);
+    	context.fill();
+	}*/
+
 	var colors = [
  		"red",
   		"blue",
   		"green",
  		"orange",
-		"black",
+		"white",
   		"purple",
   		"yellow",
   		"pink"
@@ -29,8 +38,8 @@
 
 	var settings = {
 		boxSize: 25,
-		boxAmount: 3, 
-		maxDuration: 20
+		boxAmount: 20, 
+		maxDuration: 50
 	}
 
 	function randomNumber(n, s){
@@ -40,12 +49,10 @@
 	function updateBoxes(){
 		for (i=0;i<boxes.length;i++){
 			if (boxes[i].duration == 0){
-				context.clearRect(boxes[i].x, boxes[i].y, boxes[i].size, boxes[i].size)
 				boxes[i] = addBox()
-				boxes[i].duration = 10
+				boxes[i].duration = settings.maxDuration
 			}
 			boxes[i].duration -= 1
-			console.log(boxes[i].duration)
 		}
 	}
 
@@ -58,8 +65,10 @@
 	function drawBoxes(){
 		for (i = 0; i < boxes.length; i ++){
 
+			context.beginPath();
+			context.arc(boxes[i].x,boxes[i].y,boxes[i].size,0,2*Math.PI)
 			context.fillStyle = boxes[i].color
-			context.fillRect(boxes[i].x, boxes[i].y, boxes[i].size, boxes[i].size)
+			context.fill()
 		}
 	}
 
@@ -76,6 +85,7 @@
 	createBoxes()
 
 	function runCode(){
+		context.clearRect(0,0,canvas.width,canvas.height)
 		drawBoxes()
 		updateBoxes()
 		requestAnimationFrame(runCode)
