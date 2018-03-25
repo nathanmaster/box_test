@@ -7,8 +7,8 @@
 	canvas {
 		border: 1px solid black;
 		background-color: black;
-		width:100%;
-   		height:100%;
+		width: 100%;
+   		height: 100%;
 	}
 </style>
 <body>
@@ -16,12 +16,6 @@
 <script type="text/javascript">
 	var canvas = document.getElementById("canvas")
 	var context = canvas.getContext('2d')
-
-	/*function clearCircle(x, y, radius){
-    	context.globalCompositeOperation = 'destination-out'
-    	context.arc(x, y, radius, 0, Math.PI*2, true);
-    	context.fill();
-	}*/
 
 	var colors = [
  		"red",
@@ -46,6 +40,10 @@
 		return Math.floor(Math.random()*n)+s
 	}
 
+	function leftOrRight(){
+		return randomNumber(2,0)
+	}
+
 	function updateBoxes(){
 		for (i=0;i<boxes.length;i++){
 			if (boxes[i].duration == 0){
@@ -53,6 +51,11 @@
 				boxes[i].duration = settings.maxDuration
 			}
 			boxes[i].duration -= 1
+			if (boxes[i].dir == 0){
+				boxes[i].x -= boxes[i].speed
+			} else {
+				boxes[i].x += boxes[i].speed
+			}
 		}
 	}
 
@@ -78,7 +81,9 @@
 			y: randomNumber(canvas.height - (settings.boxSize + 5), 1) + (settings.boxSize + 5),
 			size: randomNumber(settings.boxSize, 5),
 			color: colors[randomNumber(colors.length, 0)],
-			duration: randomNumber(settings.maxDuration + 10, 1)
+			duration: randomNumber(settings.maxDuration, 5),
+			dir: leftOrRight(),
+			speed: randomNumber(5,1)
 		}
 	}
 
