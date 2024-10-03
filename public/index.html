@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bouncing Balls</title>
+    <style>
+        canvas {
+            background-color: black;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas" width="600" height="400"></canvas>
+</body>
+    <script>
+        console.log("Script loaded");
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const balls = [];
+
+        // Create balls
+        //createBalls(canvas, balls);
+        console.log("Balls created:", balls);
+
+        // Main loop
+        function runCode() {
+            console.log("Running code...");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBalls(ctx, balls);
+            updateDirection(balls, canvas.width, canvas.height);
+            requestAnimationFrame(runCode);
+        }
+
+        // Start loop
+        runCode();
+
+        // Handle mouse click event
+        canvas.addEventListener('click', (event) => {
+            handleMouseClick(event, balls);
+        });
+
+        console.log("Script executed successfully.");
+    </script>
+
+</html>
