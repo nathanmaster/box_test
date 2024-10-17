@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const app = express();
 const port = 3000;
 
@@ -69,7 +71,7 @@ function addBall(canvas) {
 }
 
 // Handle mouse click event
-function handleMouseClick(event, balls) {
+function handleMouseClick(event, balls, canvas) {
     const rect = canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
@@ -87,8 +89,8 @@ function handleMouseClick(event, balls) {
 // Set up routes and middleware
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+app.get('/', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(port, () => {
@@ -112,7 +114,7 @@ const html = `
 <body>
 
     <canvas id="canvas" width="600" height="400"></canvas>
-</body>
+    <script src="script.js"></script>
     <script>
         console.log("Script loaded");
 
@@ -122,15 +124,15 @@ const html = `
         const balls = [];
 
         // Create balls
-        //createBalls(canvas, balls);
+        window.createBalls(canvas, balls);
         console.log("Balls created:", balls);
 
         // Main loop
         function runCode() {
             console.log("Running code...");
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawBalls(ctx, balls);
-            updateDirection(balls, canvas.width, canvas.height);
+            window.drawBalls(ctx, balls);
+            window.updateDirection(balls, canvas.width, canvas.height);
             requestAnimationFrame(runCode);
         }
 
@@ -139,7 +141,7 @@ const html = `
 
         // Handle mouse click event
         canvas.addEventListener('click', (event) => {
-            handleMouseClick(event, balls);
+            window.handleMouseClick(event, balls, canvas);
         });
 
         console.log("Script executed successfully.");
@@ -148,6 +150,14 @@ const html = `
 </html>
 `;
 
-const fs = require('fs');
-// Write HTML to index.html
 fs.writeFileSync('public/index.html', html);
+
+// Attach functions to the window object for access in the HTML script
+const scriptContent = `
+    window.createBalls = ${createBalls.toString()};
+    window.drawBalls = ${drawBalls.toString()};
+    window.updateDirection = ${updateDirection.toString()};
+    window.handleMouseClick = ${handleMouseClick.toString()};
+`;
+
+fs.writeFileSync('public/script.js', scriptContent);

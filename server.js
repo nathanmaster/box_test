@@ -69,7 +69,7 @@ function addBall(canvas) {
 }
 
 // Handle mouse click event
-function handleMouseClick(event, balls) {
+function handleMouseClick(event, balls, canvas) {
     const rect = canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
